@@ -120,6 +120,8 @@ class SimpleHttp
       end
     elsif @use_uv
       socket = UV::TCP.new()
+      socket.keep_alive.set = true
+      socket.keep_alive.delay = 1
       socket.connect(UV.ip4_addr(@uri[:ip].sin_addr, @uri[:port])) do |x|
         if x == 0
           socket.write(request_header) do |x|
@@ -243,5 +245,4 @@ class SimpleHttp
     end
   end
 end
-
 
